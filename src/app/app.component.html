@@ -1,0 +1,136 @@
+<div class="account-list">
+  <button (click)="openAddAccount()">Add Account</button>
+  <ng-container *ngIf="isOpenAddAccount">
+    <div class="add-account">
+      <form class="form" #f="ngForm" (ngSubmit)="onSubmitAdd(f)" novalidate>
+        <div class="input">
+          <label class="lable">firstname</label>
+          <input type="text" name="firstname" [(ngModel)]="firstname" required>
+        </div>
+        <div class="input">
+          <label class="lable">lastname</label>
+          <input type="text" name="lastname" [(ngModel)]="lastname" required>
+        </div>
+        <div class="input">
+          <label class="lable">balance</label>
+          <input type="number" name="balance" [(ngModel)]="balance" required>
+        </div>
+        <div class="input">
+          <label class="lable">age</label>
+          <input type="number" name="age" [(ngModel)]="age" required>
+        </div>
+        <div class="input">
+          <label class="lable">account_number</label>
+          <input type="number" name="account_number" [(ngModel)]="account_number" required>
+        </div>
+        <div class="input">
+          <label class="lable">city</label>
+          <input type="text" name="city" [(ngModel)]="city" required>
+        </div>
+        <div class="input">
+          <label class="lable">address</label>
+          <input type="text" name="address" [(ngModel)]="balance" required>
+        </div>
+        <div class="input">
+          <label class="lable">email</label>
+          <input type="text" name="email" [(ngModel)]="email" required>
+        </div>
+        <div class="input">
+          <label class="lable">employer</label>
+          <input type="text" name="employer" [(ngModel)]="employer" required>
+        </div>
+        <div class="input">
+          <label class="lable">gender</label>
+          <input type="text" name="gender" [(ngModel)]="gender" required>
+        </div>
+        <div class="input">
+          <label class="lable">state</label>
+          <input type="text" name="state" [(ngModel)]="state" required>
+        </div>
+        <button>Submit</button>
+      </form>
+      <!-- <button (click)="saveNew()">Save</button> -->
+    </div>
+  </ng-container>
+  <ng-container *ngIf="isOpenEditAccount">
+    <div class="add-account">
+      <form class="form" #f="ngForm" (ngSubmit)="onSubmitEdit(f)" novalidate>
+        <div class="input">
+          <label class="lable">firstname</label>
+          <input type="text" name="firstname" [(ngModel)]="selectedAccount.firstname" required>
+        </div>
+        <div class="input">
+          <label class="lable">lastname</label>
+          <input type="text" name="lastname" [(ngModel)]="selectedAccount.lastname" required>
+        </div>
+        <div class="input">
+          <label class="lable">balance</label>
+          <input type="number" name="balance" [(ngModel)]="selectedAccount.balance" required>
+        </div>
+        <div class="input">
+          <label class="lable">age</label>
+          <input type="number" name="age" [(ngModel)]="selectedAccount.age" required>
+        </div>
+        <div class="input">
+          <label class="lable">account_number</label>
+          <input type="number" name="account_number" [(ngModel)]="selectedAccount.account_number" required>
+        </div>
+        <div class="input">
+          <label class="lable">city</label>
+          <input type="text" name="city" [(ngModel)]="selectedAccount.city" required>
+        </div>
+        <div class="input">
+          <label class="lable">address</label>
+          <input type="text" name="address" [(ngModel)]="selectedAccount.balance" required>
+        </div>
+        <div class="input">
+          <label class="lable">email</label>
+          <input type="text" name="email" [(ngModel)]="selectedAccount.email" required>
+        </div>
+        <div class="input">
+          <label class="lable">employer</label>
+          <input type="text" name="employer" [(ngModel)]="selectedAccount.employer" required>
+        </div>
+        <div class="input">
+          <label class="lable">gender</label>
+          <input type="text" name="gender" [(ngModel)]="selectedAccount.gender" required>
+        </div>
+        <div class="input">
+          <label class="lable">state</label>
+          <input type="text" name="state" [(ngModel)]="selectedAccount.state" required>
+        </div>
+        <button>Submit</button>
+      </form>
+      <!-- <button (click)="saveEdit()">Save</button> -->
+    </div>
+  </ng-container>
+  <div class="search">
+    <input type="text" [(ngModel)]="searchStr" (ngModelChange)="search()">
+  </div>
+  <div *ngIf="!isLoading">Loading</div>
+  <table *ngIf="isLoading">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Age</th>
+        <th>Balance</th>
+        <th>Thao tác</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let index=index; let account of account | paginate: { id: 'pagenate',
+      itemsPerPage: 25,
+      currentPage: 1,
+      totalItems: total }">
+        <td>{{account.firstname}} {{account.lastname}}</td>
+        <td>{{account.age}}</td>
+        <td>{{account.balance}}</td>
+        <td>
+          <button (click)="openEdit(account)">Sửa</button>
+          <button (click)="deleteAcc(account)">Xoa</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <pagination-controls (click)="getAllAccount(page)" id="pagenate" (pageChange)="page = $event"></pagination-controls>
+</div>
